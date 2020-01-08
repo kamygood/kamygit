@@ -1,7 +1,45 @@
-AAABJg0ODAoPeNp1kEFvwjAMhe/5FZF2LkpLBRQp0qbSwyYK04CddvEiA9HapDgpjH+/FJg2jXGIZ
-OXZn5/f3bJF/gSGiyEX/XE/HfdHPF8seSISwWZt/Y40X68ckpNRzCboFOnGa2tkbmuogE+sams0n
-pdgYINd+TbmxR6qFro+lhOeigl4lB02EnEkhiy3xoPyM6hRxkmaZXEqRve7XU/Z+lssStDVtfpDl
-55aZJVWaBy+BpfdX8LCmPFowCgsPhtNx1/Lk0gMWKB0pHCAR7XtHSx9rCt76C08kEeSa6gcsjltw
-Gh33nTlYlHMZHjRNE6H2SAeZDep4RK9x7PX6dnr/7Yu4vLY4CmXfF6WxUv++DC9yQ55IzWk3YX/3
-JLagsO/cX8B4I6iwzAtAhQjN2yM8oM3fisiOQ9fU8KAPTK2ZAIVAIwclm83Da3RL7O1A8EDCltsk
-GM/X02eq
+{workflow:name=Remote Publishing Workflow|key=dm.remotepublishing}
+    {description}
+        This workflow allows one-way synchronization of a remote confluence instance. Please visit the [workflow's page|https://wiki.comalatech.com/display/WORKFLOW/Remote+Publishing+Workflow] for instructions on how to set up the _private_ and _remote_ instances.
+    {description}
+    {state:Draft|submit=For Review}
+    {state}
+    {state:For Review|approved=Published|rejected=Draft}
+        {approval:Publish}
+    {state}
+    {state:Published|final=true|updated=For Review}
+    {state}
+    {state:Remove|hidefrompath=true}
+    {state}
+    {trigger:statechanged|state=Published}
+        {set-message:type=note}Page publishing pending...{set-message}
+    {trigger}
+    {trigger:statechanged|state=For Review}
+        {set-message}{set-message}
+    {trigger}
+    {trigger:statechanged|state=Published|queue=true|newevent=pagepublished}
+        {remotepublish-page:remote}
+    {trigger}
+    {trigger:newsstatechanged|state=Published}
+        {set-message:type=note}Page publishing pending...{set-message}
+    {trigger}
+    {trigger:newsstatechanged|state=For Review}
+        {set-message}{set-message}
+    {trigger}
+    {trigger:newsstatechanged|state=Published|queue=true|newevent=pagepublished}
+        {remotepublish-page:remote}
+    {trigger}
+    {trigger:newsstatechanged|state=Archived|queue=true|newevent=pagepublished}
+        {remotepublish-page:remote2}
+    {trigger}
+    {trigger:pagepublished|success=true}
+        {set-message:style=info}Page Published!{set-message}
+    {trigger}
+    {trigger:pagepublished|success=false}
+        {set-state:For Review}
+        {set-message:user=<at:var at:name="user" />|style=warning}publishing failed: <at:var at:name="errormessage" />{set-message}
+    {trigger}
+    {trigger:statechanged|state=Remove}
+        {remoteremove-page:remote}
+    {trigger}
+{workflow}
