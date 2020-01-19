@@ -1,45 +1,17 @@
-{workflow:name=Remote Publishing Workflow|key=dm.remotepublishing}
-    {description}
-        This workflow allows one-way synchronization of a remote confluence instance. Please visit the [workflow's page|https://wiki.comalatech.com/display/WORKFLOW/Remote+Publishing+Workflow] for instructions on how to set up the _private_ and _remote_ instances.
-    {description}
-    {state:Draft|submit=For Review}
-    {state}
-    {state:For Review|approved=Published|rejected=Draft}
-        {approval:Publish}
-    {state}
-    {state:Published|final=true|updated=For Review}
-    {state}
-    {state:Remove|hidefrompath=true}
-    {state}
-    {trigger:statechanged|state=Published}
-        {set-message:type=note}Page publishing pending...{set-message}
-    {trigger}
-    {trigger:statechanged|state=For Review}
-        {set-message}{set-message}
-    {trigger}
-    {trigger:statechanged|state=Published|queue=true|newevent=pagepublished}
-        {remotepublish-page:remote}
-    {trigger}
-    {trigger:newsstatechanged|state=Published}
-        {set-message:type=note}Page publishing pending...{set-message}
-    {trigger}
-    {trigger:newsstatechanged|state=For Review}
-        {set-message}{set-message}
-    {trigger}
-    {trigger:newsstatechanged|state=Published|queue=true|newevent=pagepublished}
-        {remotepublish-page:remote}
-    {trigger}
-    {trigger:newsstatechanged|state=Archived|queue=true|newevent=pagepublished}
-        {remotepublish-page:remote2}
-    {trigger}
-    {trigger:pagepublished|success=true}
-        {set-message:style=info}Page Published!{set-message}
-    {trigger}
-    {trigger:pagepublished|success=false}
-        {set-state:For Review}
-        {set-message:user=<at:var at:name="user" />|style=warning}publishing failed: <at:var at:name="errormessage" />{set-message}
-    {trigger}
-    {trigger:statechanged|state=Remove}
-        {remoteremove-page:remote}
-    {trigger}
-{workflow}
+csky msky hybird cloud support
+
+jira cloud
+
+iris env / disk problem
+
+janus
+
+enterprise application support
+
+multicast openVPN
+
+wockdoc
+
+RDS
+
+simple protocal (browser)
